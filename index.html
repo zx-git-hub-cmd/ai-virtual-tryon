@@ -345,18 +345,16 @@ async function generate() {
 
     // 4. 显示结果
     setProgress(95, '即将完成...', '加载结果图片');
+    log('返回数据: ' + JSON.stringify(result).slice(0, 200));
     
-    if (result.results && result.results.length > 0) {
-      const resultUrl = result.results[0].url;
-      if (resultUrl) {
-        document.getElementById('resultImg').src = resultUrl;
-        setProgress(100, '生成完成！', '');
-        showToast('✨ AI试衣效果生成成功！', 'success');
-      } else {
-        throw new Error('未获取到结果图片URL');
-      }
+    // aitryon 返回格式: output.image_url
+    const resultUrl = result.image_url || result.results?.[0]?.url;
+    if (resultUrl) {
+      document.getElementById('resultImg').src = resultUrl;
+      setProgress(100, '生成完成！', '');
+      showToast('✨ AI试衣效果生成成功！', 'success');
     } else {
-      throw new Error('生成结果为空');
+      throw new Error('未获取到结果图片URL，返回数据: ' + JSON.stringify(result).slice(0, 300));
     }
 
   } catch (e) {
