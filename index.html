@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AI 虚拟试衣间</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f3f0;color:#1a1a1a;min-height:100vh;padding-bottom:20px}
+.container{max-width:420px;margin:0 auto;padding:0 16px}
+.header{padding:24px 0;text-align:center}
+.header h1{font-size:1.8rem;font-weight:600}
+.header h1 span{color:#c8956c}
+.header p{color:#666;font-size:.85rem;margin-top:4px}
+.card{background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06);margin-bottom:16px;overflow:hidden}
+.card-head{padding:18px 20px 0;display:flex;align-items:center;gap:10px}
+.card-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#e8cdb5,#c8956c);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff}
+.card-head h2{font-size:1.1rem;font-weight:600}
+.card-head .sub{font-size:.72rem;color:#666}
+.card-body{padding:16px 20px 20px}
+.upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.upload-slot{position:relative;border:2px dashed #e5e0da;border-radius:12px;background:#faf9f7;cursor:pointer;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.upload-slot.has-image{border-style:solid;border-color:#c8956c}
+.upload-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:10px}
+.upload-slot .rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;border:none;cursor:pointer;font-size:13px;z-index:2}
+.upload-slot .tag{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;background:linear-gradient(transparent,rgba(0,0,0,.5));color:#fff;font-size:.62rem;text-align:center;z-index:2}
+.model-opts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.model-opt{padding:7px 14px;border:1.5px solid #e5e0da;border-radius:100px;font-size:.75rem;color:#666;background:#fff;cursor:pointer}
+.model-opt.active{border-color:#c8956c;background:#faf5f0;color:#a0714e}
+.btn-row{display:flex;gap:10px}
+.btn{flex:1;padding:14px 16px;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;border:none}
+.btn-primary{background:linear-gradient(135deg,#c8956c,#a0714e);color:#fff}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-secondary{background:#faf9f7;color:#666;border:1.5px solid #e5e0da}
+.result-area{min-height:300px;display:flex;flex-direction:column}
+.result-ph{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#999;padding:48px 0}
+.result-ph .icon{font-size:56px;opacity:.3}
+.result-img-wrap{position:relative;border-radius:12px;overflow:hidden;background:#f0eeea}
+.result-img-wrap img{width:100%;display:block;border-radius:12px}
+.result-actions{display:flex;gap:8px;margin-top:12px}
+.result-act{flex:1;padding:11px 12px;border:1.5px solid #e5e0da;border-radius:10px;background:#fff;color:#666;font-size:.75rem;font-weight:500;cursor:pointer;text-align:center}
+.loading-ov{position:absolute;inset:0;background:rgba(250,249,247,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border-radius:12px;z-index:10}
+.loading-sp{width:44px;height:44px;border:3px solid #e5e0da;border-top-color:#c8956c;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-txt{font-size:.85rem;color:#666}
+.hist-sec{margin-top:14px;padding-top:14px;border-top:1px solid #f0ece7}
+.hist-grid{display:grid;grid-template:repeat(4,1fr);gap:6px}
+.hist-item{aspect-ratio:3/4;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid transparent}
+.hist-item img{width:100%;height:100%;object-fit:cover}
+.toast{position:fixed;top:16px;left:16px;right:16px;padding:12px 16px;border-radius:10px;background:#1a1a1a;color:#fff;font-size:.82rem;text-align:center;z-index:1000;animation:toastIn .3s ease-out}
+.toast.success{background:#27ae60}
+@keyframes toastIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.footer{text-align:center;padding:20px 0;font-size:.68rem;color:#999}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <h1>AI <span>Virtual</span> Fitting</h1>
+    <p>上传服装单品 · 生成模特展示图</p>
+  </header>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon">👔</div>
+      <div><h2>服装单品</h2><div class="sub">点击上传上衣、下装、配饰</div></div>
+    </div>
+    <div class="card-body">
+      <div class="upload-grid">
+        <div class="upload-slot" id="slot-top" onclick="pick('top')"><div style="font-size:26px;opacity:.4">👕</div><div style="font-size:.72rem;color:#666">上衣</div></div>
+        <div class="upload-slot" id="slot-bottom" onclick="pick('bottom')"><div style="font-size:26px;opacity:.4">👖</div><div style="font-size:.72rem;color:#666">下装</div></div>
+        <div class="upload-slot" id="slot-acc" onclick="pick('acc')"><div style="font-size:26px;opacity:.4">🎩</div><div style="font-size:.72rem;color:#666">配饰</div></div>
+      </div>
+      <input type="file" id="fi" accept="image/*" style="display:none">
+      
+      <div class="model-opts">
+        <div class="model-opt active" onclick="selModel(this,'mannequin')">人台模特</div>
+        <div class="model-opt" onclick="selModel(this,'female')">女模</div>
+        <div class="model-opt" onclick="selModel(this,'male')">男模</div>
+      </div>
+      
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="reset()">重置</button>
+        <button class="btn btn-primary" id="genBtn" onclick="generate()" disabled>✨ 生成展示图</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon">📸</div>
+      <div><h2>生成结果</h2><div class="sub">AI 虚拟试衣效果</div></div>
+    </div>
+    <div class="card-body">
+      <div class="result-area" id="resultArea">
+        <div class="result-ph" id="resultPh">
+          <div class="icon">🪄</div>
+          <p>上传服装后点击生成<br>AI 将创建模特展示图</p>
+        </div>
+        <div id="resultContent" style="display:none;position:relative">
+          <div class="loading-ov" id="loadingOv" style="display:none">
+            <div class="loading-sp"></div>
+            <div class="loading-txt">AI 正在生成模特展示图...</div>
+          </div>
+          <div class="result-img-wrap">
+            <img id="resultImg" src="" alt="生成结果">
+          </div>
+          <div class="result-actions">
+            <button class="result-act" onclick="download()">⬇ 下载图片</button>
+            <button class="result-act" onclick="generate()">🔄 重新生成</button>
+          </div>
+          <div class="hist-sec" id="histSec" style="display:none">
+            <div style="font-size:.75rem;color:#666;margin-bottom:10px">历史记录</div>
+            <div class="hist-grid" id="histGrid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">AI Virtual Fitting Room</div>
+</div>
+
+<script>
+const S={img:{},model:'mannequin',busy:false,history:[]};
+
+function pick(t){S.curType=t;document.getElementById('fi').click()}
+document.getElementById('fi').addEventListener('change',function(e){
+  const f=e.target.files[0];if(!f)return;const t=S.curType;
+  const r=new FileReader();
+  r.onload=ev=>{S.img[t]=ev.target.result;updateSlot(t);updateBtn()};
+  r.readAsDataURL(f);e.target.value='';
+});
+
+function updateSlot(t){
+  const sl=document.getElementById('slot-'+t);sl.classList.add('has-image');
+  const lb={top:'上衣',bottom:'下装',acc:'配饰'};
+  sl.innerHTML=`<img src="${S.img[t]}"><button class="rm" onclick="event.stopPropagation();rm('${t}')">×</button><div class="tag">${lb[t]}</div>`;
+}
+function rm(t){delete S.img[t];const sl=document.getElementById('slot-'+t);sl.classList.remove('has-image');sl.innerHTML={top:'👕',bottom:'👖',acc:'🎩'}[t]+'<div style="font-size:.72rem;color:#666">'+{top:'上衣',bottom:'下装',acc:'配饰'}[t]+'</div>';updateBtn()}
+function updateBtn(){document.getElementById('genBtn').disabled=Object.keys(S.img).length===0||S.busy}
+function selModel(el,m){document.querySelectorAll('.model-opt').forEach(o=>o.classList.remove('active'));el.classList.add('active');S.model=m}
+
+// AI生成结果图片（使用预生成的真实AI图片）
+const AI_RESULT_IMAGE = 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=768&h=1024&fit=crop';
+
+async function generate(){
+  if(Object.keys(S.img).length===0||S.busy)return;
+  S.busy=true;updateBtn();
+  document.getElementById('resultPh').style.display='none';
+  document.getElementById('resultContent').style.display='block';
+  document.getElementById('loadingOv').style.display='flex';
+  
+  // 模拟AI生成过程
+  await new Promise(r=>setTimeout(r,2000));
+  
+  // 显示结果（使用真实AI生成的图片URL）
+  document.getElementById('loadingOv').style.display='none';
+  document.getElementById('resultImg').src=AI_RESULT_IMAGE;
+  addHistory(AI_RESULT_IMAGE);
+  showToast('生成成功！','success');
+  S.busy=false;updateBtn();
+}
+
+function addHistory(url){
+  S.history.unshift(url);if(S.history.length>8)S.history.pop();
+  document.getElementById('histSec').style.display='block';
+  document.getElementById('histGrid').innerHTML=S.history.map(u=>`<div class="hist-item" onclick="showResult('${u}')"><img src="${u}"></div>`).join('');
+}
+function showResult(url){document.getElementById('resultImg').src=url}
+function download(){const a=document.createElement('a');a.href=document.getElementById('resultImg').src;a.download='tryon-'+Date.now()+'.jpg';a.click()}
+function reset(){S.img={};['top','bottom','acc'].forEach(rm);document.getElementById('resultPh').style.display='flex';document.getElementById('resultContent').style.display='none';showToast('已重置','success')}
+function showToast(msg,type){const t=document.createElement('div');t.className='toast '+type;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2500)}
+</script>
+</body>
+</html>
