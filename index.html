@@ -6,72 +6,61 @@
 <title>AI 虚拟试衣间</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px 16px}
-.container{max-width:420px;margin:0 auto}
-.header{padding:20px 0;text-align:center;color:#fff}
-.header h1{font-size:1.8rem;font-weight:700;text-shadow:0 2px 4px rgba(0,0,0,.2)}
-.header p{color:rgba(255,255,255,.8);font-size:.9rem;margin-top:8px}
-.card{background:#fff;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.2);margin-bottom:16px;overflow:hidden}
-.card-head{padding:20px 20px 0;display:flex;align-items:center;gap:12px}
-.card-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;box-shadow:0 4px 12px rgba(102,126,234,.3)}
-.card-head h2{font-size:1.15rem;font-weight:600;color:#1a1a1a}
-.card-head .sub{font-size:.75rem;color:#888;margin-top:2px}
-.card-body{padding:20px}
-
-.upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.upload-col{display:flex;flex-direction:column;gap:8px}
-.col-title{font-size:.8rem;color:#666;font-weight:600;display:flex;align-items:center;gap:4px}
-.upload-slot{position:relative;border:2px dashed #d0d0d0;border-radius:16px;background:#f8f9fa;cursor:pointer;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:all .3s}
-.upload-slot:active{transform:scale(.98)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:16px}
+.container{max-width:440px;margin:0 auto}
+.header{padding:20px 0 16px;text-align:center;color:#fff}
+.header h1{font-size:1.7rem;font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,.2)}
+.header p{color:rgba(255,255,255,.8);font-size:.85rem;margin-top:6px}
+.card{background:#fff;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.15);margin-bottom:16px;overflow:hidden}
+.card-head{padding:18px 20px 0;display:flex;align-items:center;gap:12px}
+.card-icon{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff}
+.card-head h2{font-size:1.05rem;font-weight:600}
+.card-head .sub{font-size:.72rem;color:#999;margin-top:2px}
+.card-body{padding:16px 20px 20px}
+.upload-section{margin-bottom:16px}
+.section-label{font-size:.8rem;font-weight:600;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.upload-grid.three{grid-template-columns:1fr 1fr 1fr}
+.upload-slot{position:relative;border:2px dashed #ddd;border-radius:14px;background:#fafafa;cursor:pointer;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:all .2s;overflow:hidden}
+.upload-slot:active{transform:scale(.97)}
 .upload-slot.has-image{border-style:solid;border-color:#667eea;background:#fff}
-.upload-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:14px}
-.upload-slot .rm{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;font-size:16px;z-index:2;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.upload-slot .tag{position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;font-size:.7rem;text-align:center;z-index:2}
-
-.category-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.cat-btn{padding:10px 18px;border:2px solid #e0e0e0;border-radius:100px;font-size:.8rem;color:#666;background:#fff;cursor:pointer;transition:all .2s;font-weight:500}
-.cat-btn.active{border-color:#667eea;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;box-shadow:0 4px 12px rgba(102,126,234,.3)}
-
-.btn-row{display:flex;gap:12px}
-.btn{flex:1;padding:16px 20px;border-radius:14px;font-size:.95rem;font-weight:600;cursor:pointer;border:none;transition:all .3s}
-.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;box-shadow:0 6px 20px rgba(102,126,234,.4)}
-.btn-primary:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
-.btn-primary:not(:disabled):active{transform:translateY(2px)}
-.btn-secondary{background:#f0f0f0;color:#666}
-
-.result-area{min-height:320px;display:flex;flex-direction:column}
-.result-ph{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#999;padding:60px 20px;text-align:center}
-.result-ph .icon{font-size:64px;opacity:.4}
-.result-ph p{line-height:1.6}
-.result-img-wrap{position:relative;border-radius:16px;overflow:hidden;background:#f0f0f0;box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.upload-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px}
+.upload-slot .rm{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;border:none;cursor:pointer;font-size:14px;z-index:2;display:flex;align-items:center;justify-content:center}
+.upload-slot .tag{position:absolute;bottom:0;left:0;right:0;padding:5px;background:linear-gradient(transparent,rgba(0,0,0,.55));color:#fff;font-size:.65rem;text-align:center;z-index:2}
+.btn-row{display:flex;gap:10px;margin-top:16px}
+.btn{flex:1;padding:14px;border-radius:12px;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;box-shadow:0 4px 16px rgba(102,126,234,.35)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.btn-secondary{background:#f0f0f0;color:#777}
+.result-area{min-height:280px;display:flex;flex-direction:column}
+.result-ph{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#bbb;padding:40px 20px;text-align:center}
+.result-ph .icon{font-size:52px;opacity:.4}
+.result-img-wrap{position:relative;border-radius:14px;overflow:hidden;background:#f5f5f5;box-shadow:0 4px 20px rgba(0,0,0,.08)}
 .result-img-wrap img{width:100%;display:block}
-.result-actions{display:flex;gap:10px;margin-top:16px}
-.result-act{flex:1;padding:14px 16px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;color:#555;font-size:.85rem;font-weight:600;cursor:pointer;text-align:center;transition:all .2s}
-.result-act:active{background:#f8f8f8}
-
-.loading-ov{position:absolute;inset:0;background:rgba(255,255,255,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;border-radius:16px;z-index:10}
-.loading-sp{width:56px;height:56px;border:4px solid #f0f0f0;border-top-color:#667eea;border-radius:50%;animation:spin 1s linear infinite}
+.result-actions{display:flex;gap:8px;margin-top:12px}
+.result-act{flex:1;padding:12px;border:1.5px solid #e0e0e0;border-radius:10px;background:#fff;color:#555;font-size:.8rem;font-weight:500;cursor:pointer;text-align:center}
+.loading-ov{position:absolute;inset:0;background:rgba(255,255,255,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border-radius:14px;z-index:10}
+.loading-sp{width:48px;height:48px;border:4px solid #eee;border-top-color:#667eea;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-txt{font-size:1rem;color:#444;text-align:center;line-height:1.6;font-weight:500}
-.loading-txt span{font-size:.85rem;color:#888;display:block;margin-top:8px}
-
-.tip-box{background:linear-gradient(135deg,#fff9e6,#fff3cd);border-radius:12px;padding:14px 16px;margin-top:16px;border-left:4px solid #f0ad4e}
-.tip-box-title{font-size:.8rem;font-weight:600;color:#856404;margin-bottom:4px}
-.tip-box-text{font-size:.75rem;color:#856404;line-height:1.5}
-
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:14px 24px;border-radius:12px;background:#1a1a1a;color:#fff;font-size:.9rem;text-align:center;z-index:1000;animation:toastIn .3s ease-out;box-shadow:0 8px 30px rgba(0,0,0,.3);white-space:nowrap}
+.loading-txt{font-size:.9rem;color:#444;text-align:center;line-height:1.6}
+.loading-txt span{font-size:.78rem;color:#999;display:block;margin-top:6px}
+.loading-progress{width:200px;height:4px;background:#eee;border-radius:2px;overflow:hidden;margin-top:4px}
+.loading-bar{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:2px;transition:width .5s}
+.tip{background:#f8f9ff;border-radius:10px;padding:12px 14px;margin-top:14px;border-left:3px solid #667eea}
+.tip p{font-size:.72rem;color:#666;line-height:1.5}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:10px;background:#333;color:#fff;font-size:.85rem;text-align:center;z-index:1000;animation:toastIn .3s;box-shadow:0 6px 20px rgba(0,0,0,.25);max-width:90%}
 .toast.success{background:#28a745}
 .toast.error{background:#dc3545}
-@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-
-.footer{text-align:center;padding:30px 0;font-size:.75rem;color:rgba(255,255,255,.6)}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-16px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.footer{text-align:center;padding:20px 0;font-size:.7rem;color:rgba(255,255,255,.5)}
+.log-box{background:#1a1a2e;border-radius:10px;padding:12px;margin-top:14px;max-height:120px;overflow-y:auto;font-size:.65rem;color:#a0a0c0;line-height:1.6;font-family:monospace}
 </style>
 </head>
 <body>
 <div class="container">
   <header class="header">
     <h1>🧥 AI 虚拟试衣间</h1>
-    <p>上传模特和服装，AI 智能生成试穿效果</p>
+    <p>上传模特和服装照片，AI 生成真实试穿效果</p>
   </header>
 
   <div class="card">
@@ -79,43 +68,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="card-icon">📸</div>
       <div>
         <h2>上传照片</h2>
-        <div class="sub">选择模特照片和要试穿的服装</div>
+        <div class="sub">模特正面全身照 + 服装平铺图</div>
       </div>
     </div>
     <div class="card-body">
-      <div class="upload-grid">
-        <div class="upload-col">
-          <div class="col-title">👤 模特照片</div>
+      <div class="upload-section">
+        <div class="section-label">👤 模特照片（正面全身照）</div>
+        <div class="upload-grid">
           <div class="upload-slot" id="slot-model" onclick="pick('model')">
-            <div style="font-size:36px;opacity:.5">🧍</div>
-            <div style="font-size:.8rem;color:#888">点击上传</div>
-          </div>
-        </div>
-        <div class="upload-col">
-          <div class="col-title">👕 服装照片</div>
-          <div class="upload-slot" id="slot-garment" onclick="pick('garment')">
-            <div style="font-size:36px;opacity:.5">👔</div>
-            <div style="font-size:.8rem;color:#888">点击上传</div>
+            <div style="font-size:32px;opacity:.4">🧍</div>
+            <div style="font-size:.75rem;color:#999">正面全身照</div>
           </div>
         </div>
       </div>
-      
-      <div class="category-row">
-        <div class="cat-btn active" onclick="selCategory(this,'upper_body')">👔 上装</div>
-        <div class="cat-btn" onclick="selCategory(this,'lower_body')">👖 下装</div>
-        <div class="cat-btn" onclick="selCategory(this,'dresses')">👗 连衣裙</div>
+      <div class="upload-section">
+        <div class="section-label">👕 服装照片（平铺图）</div>
+        <div class="upload-grid three">
+          <div class="upload-slot" id="slot-top" onclick="pick('top')">
+            <div style="font-size:28px;opacity:.4">👔</div>
+            <div style="font-size:.7rem;color:#999">上装</div>
+          </div>
+          <div class="upload-slot" id="slot-bottom" onclick="pick('bottom')">
+            <div style="font-size:28px;opacity:.4">👖</div>
+            <div style="font-size:.7rem;color:#999">下装</div>
+          </div>
+          <div class="upload-slot" id="slot-dress" onclick="pick('dress')">
+            <div style="font-size:28px;opacity:.4">👗</div>
+            <div style="font-size:.7rem;color:#999">连衣裙</div>
+          </div>
+        </div>
       </div>
-      
       <input type="file" id="fi" accept="image/*" style="display:none">
-      
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="reset()">🔄 重置</button>
-        <button class="btn btn-primary" id="genBtn" onclick="generate()" disabled>✨ 生成试衣效果</button>
+        <button class="btn btn-primary" id="genBtn" onclick="generate()" disabled>✨ AI 生成试衣</button>
       </div>
-      
-      <div class="tip-box">
-        <div class="tip-box-title">💡 使用提示</div>
-        <div class="tip-box-text">上传清晰的模特正面照和服装平铺图，效果最佳。生成过程约需 10-20 秒。</div>
+      <div class="tip">
+        <p>💡 <b>模特照</b>：正面全身照，光线明亮，单人<br>
+        <b>服装照</b>：衣服平铺拍摄，背景干净，无折叠遮挡<br>
+        上装+下装可同时试穿，或单独上传连衣裙</p>
       </div>
     </div>
   </div>
@@ -125,22 +116,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="card-icon">✨</div>
       <div>
         <h2>生成结果</h2>
-        <div class="sub">AI 智能合成的试穿效果</div>
+        <div class="sub">阿里云百炼 AI试衣 · 真实效果</div>
       </div>
     </div>
     <div class="card-body">
-      <div class="result-area" id="resultArea">
+      <div class="result-area">
         <div class="result-ph" id="resultPh">
           <div class="icon">🪄</div>
-          <p>上传照片后点击"生成试衣效果"<br>AI 将为您创建试穿照片</p>
+          <p>上传照片后点击生成<br>AI 将创建真实试穿效果</p>
         </div>
         <div id="resultContent" style="display:none;position:relative">
           <div class="loading-ov" id="loadingOv" style="display:none">
             <div class="loading-sp"></div>
-            <div class="loading-txt">
-              AI 正在生成试衣效果...
-              <span>请稍候，约需 10-20 秒</span>
-            </div>
+            <div class="loading-txt" id="loadingTxt">正在处理...<span>请稍候</span></div>
+            <div class="loading-progress"><div class="loading-bar" id="loadingBar" style="width:0%"></div></div>
           </div>
           <div class="result-img-wrap">
             <img id="resultImg" src="" alt="生成结果">
@@ -151,198 +140,256 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           </div>
         </div>
       </div>
+      <div class="log-box" id="logBox" style="display:none"></div>
     </div>
   </div>
 
-  <div class="footer">AI Virtual Fitting Room · 完全免费使用</div>
+  <div class="footer">Powered by 阿里云百炼 AI试衣 · 新用户400张免费</div>
 </div>
 
 <script>
-const S = { img: {}, category: 'upper_body', busy: false };
+// ===== 配置 =====
+const API_KEY = 'sk-892c98f99ddf4295bd82f7f661f98e92';
+const DASHSCOPE = 'https://dashscope.aliyuncs.com';
+// CORS代理 - 用于绕过浏览器跨域限制
+const CORS_PROXY = 'https://corsproxy.io/?';
 
-// 模拟 AI 生成效果
-async function generate() {
-  if (!(S.img.model && S.img.garment) || S.busy) return;
-  S.busy = true;
-  updateBtn();
-  
-  document.getElementById('resultPh').style.display = 'none';
-  document.getElementById('resultContent').style.display = 'block';
-  document.getElementById('loadingOv').style.display = 'flex';
-  
-  try {
-    // 模拟 AI 处理时间
-    await new Promise(r => setTimeout(r, 3000));
-    
-    // 创建合成效果
-    const resultCanvas = await createTryOnEffect(S.img.model, S.img.garment, S.category);
-    const resultUrl = resultCanvas.toDataURL('image/jpeg', 0.9);
-    
-    document.getElementById('loadingOv').style.display = 'none';
-    document.getElementById('resultImg').src = resultUrl;
-    showToast('✨ 试衣效果生成成功！', 'success');
-    
-  } catch (e) {
-    console.error(e);
-    showToast('生成失败，请重试', 'error');
-    document.getElementById('loadingOv').style.display = 'none';
-  }
-  
-  S.busy = false;
-  updateBtn();
+const S = { img: {}, busy: false };
+
+// ===== 日志 =====
+function log(msg) {
+  console.log(msg);
+  const box = document.getElementById('logBox');
+  box.style.display = 'block';
+  box.innerHTML += msg + '<br>';
+  box.scrollTop = box.scrollHeight;
 }
 
-// 创建试衣合成效果
-async function createTryOnEffect(modelBase64, garmentBase64, category) {
-  return new Promise((resolve) => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 512;
-    canvas.height = 768;
-    
-    const modelImg = new Image();
-    const garmentImg = new Image();
-    
-    modelImg.onload = () => {
-      // 绘制模特背景
-      ctx.fillStyle = '#f5f5f5';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // 绘制模特（居中，保持比例）
-      const modelAspect = modelImg.width / modelImg.height;
-      let mw = canvas.width * 0.9;
-      let mh = mw / modelAspect;
-      if (mh > canvas.height * 0.85) {
-        mh = canvas.height * 0.85;
-        mw = mh * modelAspect;
-      }
-      const mx = (canvas.width - mw) / 2;
-      const my = (canvas.height - mh) / 2;
-      
-      // 添加阴影效果
-      ctx.shadowColor = 'rgba(0,0,0,0.2)';
-      ctx.shadowBlur = 20;
-      ctx.shadowOffsetY = 10;
-      ctx.drawImage(modelImg, mx, my, mw, mh);
-      ctx.shadowColor = 'transparent';
-      
-      // 绘制服装叠加效果
-      garmentImg.onload = () => {
-        // 根据类别调整服装位置和大小
-        let gw, gh, gx, gy;
-        const garmentAspect = garmentImg.width / garmentImg.height;
-        
-        if (category === 'upper_body') {
-          // 上装 - 放在上半身区域
-          gw = mw * 0.5;
-          gh = gw / garmentAspect;
-          gx = mx + mw * 0.25;
-          gy = my + mh * 0.15;
-        } else if (category === 'lower_body') {
-          // 下装 - 放在下半身区域
-          gw = mw * 0.45;
-          gh = gw / garmentAspect;
-          gx = mx + mw * 0.275;
-          gy = my + mh * 0.5;
-        } else {
-          // 连衣裙 - 覆盖全身
-          gw = mw * 0.55;
-          gh = gw / garmentAspect;
-          gx = mx + mw * 0.225;
-          gy = my + mh * 0.1;
-        }
-        
-        // 绘制服装（带透明度和混合效果模拟AI合成）
-        ctx.save();
-        ctx.globalAlpha = 0.85;
-        
-        // 创建渐变遮罩模拟融合效果
-        const gradient = ctx.createLinearGradient(gx, gy, gx, gy + gh);
-        gradient.addColorStop(0, 'rgba(255,255,255,0.3)');
-        gradient.addColorStop(0.5, 'rgba(255,255,255,0.1)');
-        gradient.addColorStop(1, 'rgba(255,255,255,0.3)');
-        
-        ctx.drawImage(garmentImg, gx, gy, gw, gh);
-        ctx.fillStyle = gradient;
-        ctx.fillRect(gx, gy, gw, gh);
-        
-        ctx.restore();
-        
-        // 添加标签
-        ctx.fillStyle = 'rgba(102, 126, 234, 0.9)';
-        ctx.fillRect(10, 10, 120, 32);
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 14px -apple-system, sans-serif';
-        ctx.fillText('AI 虚拟试衣', 20, 32);
-        
-        resolve(canvas);
-      };
-      
-      garmentImg.src = garmentBase64;
-    };
-    
-    modelImg.src = modelBase64;
+// ===== DashScope API 调用（通过CORS代理）=====
+async function dashscopeFetch(path, options = {}) {
+  const url = DASHSCOPE + path;
+  const proxyUrl = CORS_PROXY + encodeURIComponent(url);
+  
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${API_KEY}`,
+    ...options.headers,
+  };
+
+  const res = await fetch(proxyUrl, {
+    ...options,
+    headers,
+  });
+  return await res.json();
+}
+
+// 上传图片获取临时 oss:// URL
+async function uploadImage(base64Data) {
+  // 1. 获取上传凭证
+  log('获取上传凭证...');
+  const policyRes = await dashscopeFetch('/api/v1/uploads?action=getPolicy&model=aitryon');
+  
+  if (!policyRes.data) throw new Error('获取上传凭证失败: ' + JSON.stringify(policyRes));
+  const policy = policyRes.data;
+
+  // 2. 上传文件到 OSS（使用 FormData）
+  log('上传图片到 OSS...');
+  const matches = base64Data.match(/^data:image\/(\w+);base64,(.+)$/);
+  if (!matches) throw new Error('图片格式无效');
+  
+  const ext = matches[1] === 'jpeg' ? 'jpg' : matches[1];
+  const binaryStr = atob(matches[2]);
+  const bytes = new Uint8Array(binaryStr.length);
+  for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
+
+  const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const key = `${policy.upload_dir}/${fileName}`;
+
+  const formData = new FormData();
+  formData.append('OSSAccessKeyId', policy.oss_access_key_id);
+  formData.append('Signature', policy.signature);
+  formData.append('policy', policy.policy);
+  formData.append('x-oss-object-acl', policy.x_oss_object_acl);
+  formData.append('x-oss-forbid-overwrite', policy.x_oss_forbid_overwrite);
+  formData.append('key', key);
+  formData.append('success_action_status', '200');
+  formData.append('file', new Blob([bytes], { type: `image/${ext}` }), fileName);
+
+  // OSS上传不需要CORS代理（OSS支持CORS）
+  const uploadRes = await fetch(policy.upload_host, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (uploadRes.status !== 200) throw new Error('图片上传失败: ' + uploadRes.status);
+  
+  const ossUrl = `oss://${key}`;
+  log('上传成功: ' + ossUrl);
+  return ossUrl;
+}
+
+// 创建AI试衣任务
+async function createTryOnTask(personUrl, topUrl, bottomUrl) {
+  log('创建AI试衣任务...');
+  const input = { person_image_url: personUrl };
+  if (topUrl) input.top_garment_url = topUrl;
+  if (bottomUrl) input.bottom_garment_url = bottomUrl;
+
+  const res = await dashscopeFetch(
+    '/api/v1/services/aigc/image2image/image-synthesis',
+    {
+      method: 'POST',
+      headers: {
+        'X-DashScope-Async': 'enable',
+        'X-DashScope-OssResourceResolve': 'enable',
+      },
+      body: JSON.stringify({ model: 'aitryon', input }),
+    }
+  );
+
+  if (!res.output?.task_id) throw new Error('创建任务失败: ' + JSON.stringify(res));
+  log('任务已创建: ' + res.output.task_id);
+  return res.output.task_id;
+}
+
+// 查询任务状态
+async function queryTask(taskId) {
+  return await dashscopeFetch(`/api/v1/tasks/${taskId}`, {
+    headers: { 'X-DashScope-OssResourceResolve': 'enable' },
   });
 }
 
-// 文件选择
-function pick(t) {
-  S.curType = t;
-  document.getElementById('fi').click();
+// 等待任务完成
+async function waitForResult(taskId, maxWait = 120) {
+  const start = Date.now();
+  while (Date.now() - start < maxWait * 1000) {
+    await new Promise(r => setTimeout(r, 3000));
+    const data = await queryTask(taskId);
+    const status = data.output?.task_status;
+    log(`任务状态: ${status}`);
+    
+    if (status === 'SUCCEEDED') return data.output;
+    if (status === 'FAILED') throw new Error(data.output?.message || '生成失败');
+  }
+  throw new Error('超时，请重试');
 }
 
+// ===== 文件选择 =====
+function pick(t) { S.curType = t; document.getElementById('fi').click(); }
+
 document.getElementById('fi').addEventListener('change', function(e) {
-  const f = e.target.files[0];
-  if (!f) return;
+  const f = e.target.files[0]; if (!f) return;
   const t = S.curType;
+  if (t === 'dress') { delete S.img.top; delete S.img.bottom; updateSlotUI('top'); updateSlotUI('bottom'); }
+  if (t === 'top' || t === 'bottom') { delete S.img.dress; updateSlotUI('dress'); }
   const r = new FileReader();
-  r.onload = ev => {
-    S.img[t] = ev.target.result;
-    updateSlot(t);
-    updateBtn();
-  };
+  r.onload = ev => { S.img[t] = ev.target.result; updateSlotUI(t); updateBtn(); };
   r.readAsDataURL(f);
   e.target.value = '';
 });
 
-function updateSlot(t) {
+function updateSlotUI(t) {
   const sl = document.getElementById('slot-' + t);
-  sl.classList.add('has-image');
-  const lb = { model: '模特', garment: '服装' };
-  sl.innerHTML = `<img src="${S.img[t]}"><button class="rm" onclick="event.stopPropagation();rm('${t}')">×</button><div class="tag">${lb[t]}</div>`;
+  const labels = { model: '模特', top: '上装', bottom: '下装', dress: '连衣裙' };
+  const icons = { model: '🧍', top: '👔', bottom: '👖', dress: '👗' };
+  const subs = { model: '正面全身照', top: '上装', bottom: '下装', dress: '连衣裙' };
+  if (S.img[t]) {
+    sl.classList.add('has-image');
+    sl.innerHTML = `<img src="${S.img[t]}"><button class="rm" onclick="event.stopPropagation();rmImg('${t}')">×</button><div class="tag">${labels[t]}</div>`;
+  } else {
+    sl.classList.remove('has-image');
+    sl.innerHTML = `<div style="font-size:${t==='model'?32:28}px;opacity:.4">${icons[t]}</div><div style="font-size:${t==='model'?.75:.7}rem;color:#999">${subs[t]}</div>`;
+  }
 }
 
-function rm(t) {
-  delete S.img[t];
-  const sl = document.getElementById('slot-' + t);
-  sl.classList.remove('has-image');
-  const icons = { model: '🧍', garment: '👔' };
-  sl.innerHTML = `<div style="font-size:36px;opacity:.5">${icons[t]}</div><div style="font-size:.8rem;color:#888">点击上传</div>`;
-  updateBtn();
-}
-
+function rmImg(t) { delete S.img[t]; updateSlotUI(t); updateBtn(); }
 function updateBtn() {
-  document.getElementById('genBtn').disabled = !(S.img.model && S.img.garment) || S.busy;
+  document.getElementById('genBtn').disabled = !(S.img.model && (S.img.top || S.img.bottom || S.img.dress)) || S.busy;
 }
 
-function selCategory(el, c) {
-  document.querySelectorAll('.cat-btn').forEach(o => o.classList.remove('active'));
-  el.classList.add('active');
-  S.category = c;
+// ===== AI 生成 =====
+async function generate() {
+  if (S.busy) return;
+  S.busy = true; updateBtn();
+  document.getElementById('logBox').innerHTML = '';
+  document.getElementById('logBox').style.display = 'block';
+
+  document.getElementById('resultPh').style.display = 'none';
+  document.getElementById('resultContent').style.display = 'block';
+  document.getElementById('loadingOv').style.display = 'flex';
+
+  try {
+    // 1. 上传图片
+    setProgress(10, '正在上传图片...', '上传到阿里云OSS');
+    const [personUrl, topUrl, bottomUrl] = await Promise.all([
+      uploadImage(S.img.model),
+      S.img.top ? uploadImage(S.img.top) : Promise.resolve(null),
+      S.img.bottom ? uploadImage(S.img.bottom) : Promise.resolve(null),
+    ]);
+
+    // 连衣裙处理
+    let finalTopUrl = topUrl;
+    let finalBottomUrl = bottomUrl;
+    if (S.img.dress) {
+      finalTopUrl = await uploadImage(S.img.dress);
+      finalBottomUrl = null;
+    }
+
+    // 2. 创建试衣任务
+    setProgress(40, 'AI 正在生成试衣效果...', '通常需要 15-30 秒');
+    const taskId = await createTryOnTask(personUrl, finalTopUrl, finalBottomUrl);
+
+    // 3. 等待结果
+    setProgress(60, 'AI 正在生成试衣效果...', '请耐心等待');
+    const result = await waitForResult(taskId);
+
+    // 4. 显示结果
+    setProgress(95, '即将完成...', '加载结果图片');
+    
+    if (result.results && result.results.length > 0) {
+      const resultUrl = result.results[0].url;
+      if (resultUrl) {
+        document.getElementById('resultImg').src = resultUrl;
+        setProgress(100, '生成完成！', '');
+        showToast('✨ AI试衣效果生成成功！', 'success');
+      } else {
+        throw new Error('未获取到结果图片URL');
+      }
+    } else {
+      throw new Error('生成结果为空');
+    }
+
+  } catch (e) {
+    console.error(e);
+    log('错误: ' + e.message);
+    showToast('生成失败: ' + e.message, 'error');
+    document.getElementById('resultPh').style.display = 'flex';
+    document.getElementById('resultContent').style.display = 'none';
+  }
+
+  document.getElementById('loadingOv').style.display = 'none';
+  S.busy = false; updateBtn();
+}
+
+function setProgress(pct, title, sub) {
+  document.getElementById('loadingBar').style.width = pct + '%';
+  document.getElementById('loadingTxt').innerHTML = title + (sub ? `<span>${sub}</span>` : '');
 }
 
 function download() {
   const a = document.createElement('a');
   a.href = document.getElementById('resultImg').src;
   a.download = 'AI试衣-' + Date.now() + '.jpg';
+  a.target = '_blank';
   a.click();
 }
 
 function reset() {
   S.img = {};
-  ['model', 'garment'].forEach(rm);
+  ['model', 'top', 'bottom', 'dress'].forEach(updateSlotUI);
   document.getElementById('resultPh').style.display = 'flex';
   document.getElementById('resultContent').style.display = 'none';
+  document.getElementById('logBox').style.display = 'none';
   showToast('已重置', 'success');
 }
 
@@ -351,8 +398,10 @@ function showToast(msg, type) {
   t.className = 'toast ' + type;
   t.textContent = msg;
   document.body.appendChild(t);
-  setTimeout(() => t.remove(), 2500);
+  setTimeout(() => t.remove(), 3000);
 }
+
+updateBtn();
 </script>
 </body>
 </html>
